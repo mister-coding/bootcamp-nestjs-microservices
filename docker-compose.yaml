@@ -1,0 +1,92 @@
+services:
+
+  user:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: "yarn start:dev user"
+
+  product:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: "yarn start:dev product"
+  
+  payment:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: "yarn start:dev payment"
+
+  shipping:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: "yarn start:dev shipping"
+
+  order:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: "yarn start:dev order"
+
+  media:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: "yarn start:dev media"
+
+  db:
+    image: postgres:15.3
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: ecommerce
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    depends_on:
+      - user
+      - product
+      - payment
+      - shipping
+      - media
+      - order
+
+volumes:
+  dbdata:

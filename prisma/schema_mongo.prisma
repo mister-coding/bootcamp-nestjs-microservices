@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@db_prisma/mongo"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_MONGODB_URL")
+}
+
+model media {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  media_name  String?
+  description String?
+  media_path  String?
+  url         String?
+  media_type  String?
+  size        Int      @default(0)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+
+  @@index([id, media_path, media_type])
+}
+
+model notification {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  notification_type String?
+  content           String?
+  send_to           String?
+  status            String?
+  created_at        DateTime @default(now())
+  updated_at        DateTime @default(now()) @updatedAt
+}
