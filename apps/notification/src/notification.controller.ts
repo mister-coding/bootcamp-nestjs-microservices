@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { NotificationService } from './notification.service';
+import { EventPattern } from '@nestjs/microservices';
 
 @Controller()
 export class NotificationController {
@@ -9,4 +10,12 @@ export class NotificationController {
   getHello(): string {
     return this.notificationService.getHello();
   }
+
+  @EventPattern("TEST_USER")
+  testuser(data:any){
+    console.log("TEST USER NATS ",data);
+    
+  }
+
+
 }

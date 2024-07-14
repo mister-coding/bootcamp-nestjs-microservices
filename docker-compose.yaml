@@ -5,6 +5,8 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
+    env_file:
+      - .env
     command: "yarn start:dev user"
 
   product:
@@ -42,6 +44,15 @@ services:
       - ./:/app
     command: "yarn start:dev media"
 
+  notification:
+    image: node:18
+    working_dir: /app
+    depends_on:
+      - nats
+    volumes:
+      - ./:/app
+    command: "yarn start:dev notification"
+
   db:
     image: postgres:15.3
     environment:
@@ -60,17 +71,24 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
       - 27017:27017
-  
-  mongo-express:
-    image: mongo-express
-    restart: always
+
+  nats:
+    image: nats
     ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-      ME_CONFIG_BASICAUTH: false
+      - "8222:8222"
+    command: "--cluster_name NATS --cluster nats://0.0.0.0:6222 --http_port 8222"
+
+  
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  #     ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+  #     ME_CONFIG_BASICAUTH: false
 
 
   nginx:
