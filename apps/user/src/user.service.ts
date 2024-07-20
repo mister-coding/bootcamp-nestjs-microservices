@@ -1,6 +1,6 @@
 import { PrismaMongoService } from '@app/prisma/prisma-mongo.service';
 import { UserRepository } from '@app/repositories/repos/user.repository';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { user_level } from '@prisma/client';
 
@@ -18,20 +18,16 @@ export class UserService {
   }
 
   async getUsers() {
-    try {
-      await this.prismaMongo.notification.create({
-        data: {
-          notification_type: 'Notif type',
-          content: 'content',
-          send_to: 'send to',
-          status: 'status',
-        },
-      });
-    } catch (error) {
-      new Logger().error(error);
-    }
+    await this.prismaMongo.notification.create({
+      data: {
+        notification_type: 'Notif type',
+        content: 'content',
+        send_to: 'send to',
+        status: 'status',
+      },
+    });
 
-    // return await this.prismaMongo.notification.findMany();
+    return await this.prismaMongo.notification.findMany();
     // return await this.userRepo.getUserByCustom({
     //   user_level: user_level.Member,
     //   email: "email"
