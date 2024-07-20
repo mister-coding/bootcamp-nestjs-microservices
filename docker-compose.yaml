@@ -7,42 +7,42 @@ services:
       - ./:/app
     env_file:
       - .env
-    command: "yarn start:dev user"
+    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev user"
 
   product:
     image: node:18
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev product"
+    command: bash -c "yarn start:dev product"
   
   payment:
     image: node:18
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev payment"
+    command: bash -c "yarn start:dev payment"
 
   shipping:
     image: node:18
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev shipping"
+    command: bash -c "yarn start:dev shipping"
 
   order:
     image: node:18
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev order"
+    command: bash -c "yarn start:dev order"
 
   media:
     image: node:18
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev media"
+    command: bash -c "yarn start:dev media"
 
   notification:
     image: node:18
@@ -51,7 +51,7 @@ services:
       - nats
     volumes:
       - ./:/app
-    command: "yarn start:dev notification"
+    command: bash -c "yarn start:dev notification"
 
   db:
     image: postgres:15.3
@@ -64,11 +64,13 @@ services:
     ports:
       - "5432:5432"
 
-  mongo:
+  mongodb:
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-data:/data/db
     ports:
       - 27017:27017
 
@@ -108,3 +110,4 @@ services:
 
 volumes:
   dbdata:
+  mongo-data:
