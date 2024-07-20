@@ -53,6 +53,12 @@
       ],
       "@app/worker/*": [
         "libs/worker/src/*"
+      ],
+      "@app/common": [
+        "libs/common/src"
+      ],
+      "@app/common/*": [
+        "libs/common/src/*"
       ]
     }
   }
