@@ -5,13 +5,25 @@ import { PrismaModule } from '@app/prisma';
 import { ProductRepository } from './repos/product.repository';
 import { ShippingRepository } from './repos/shipping.repository';
 import { OrderItemRepository } from './repos/order-item.repository';
+import { MediaRepository } from './repos/media.repository';
+import { NotificationRepository } from './repos/notification.repository';
+import { OrderRepository } from './repos/order.repository';
+import { PaymentRepository } from './repos/payment.repository';
+import { StockRepository } from './repos/stock.repository';
+import { StockHistoryRepository } from './repos/stock-history.repository';
 
 const repos = [
   RepositoriesService, 
   UserRepository, 
   ProductRepository,
   ShippingRepository,
-  OrderItemRepository
+  OrderItemRepository,
+  OrderRepository,
+  MediaRepository,
+  NotificationRepository,
+  PaymentRepository,
+  StockRepository,
+  StockHistoryRepository
 ];
 
 @Module({

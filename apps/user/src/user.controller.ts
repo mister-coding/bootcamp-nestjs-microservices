@@ -3,7 +3,6 @@ import { UserService } from './user.service';
 
 @Controller()
 export class UserController {
-  
   constructor(private readonly userService: UserService) {}
 
   @Get()
@@ -13,6 +12,10 @@ export class UserController {
 
   @Get('list-all')
   async getUsers() {
-    return await this.userService.getUsers();
+    const data = await this.userService.getUsers();
+    return {
+      data,
+      message: 'get users success',
+    };
   }
 }

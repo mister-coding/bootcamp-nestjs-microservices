@@ -7,7 +7,7 @@ services:
       - ./:/app
     env_file:
       - .env
-    command: "yarn start:dev user"
+    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev user"
 
   product:
     image: node:18
@@ -64,13 +64,13 @@ services:
     ports:
       - "5432:5432"
 
-  mongo:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - 27017:27017
+  # mongo:
+  #   image: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
+  #   ports:
+  #     - 27017:27017
 
   nats:
     image: nats
@@ -100,11 +100,11 @@ services:
       - 80:80
     depends_on:
       - user
-      - product
-      - payment
-      - shipping
-      - media
-      - order
+      # - product
+      # - payment
+      # - shipping
+      # - media
+      # - order
 
 volumes:
   dbdata:
