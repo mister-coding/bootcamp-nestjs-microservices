@@ -6,9 +6,11 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PrismaModule } from '@app/prisma';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from '@app/common/interceptors/response/response.interceptor';
+import { CommonModule } from '@app/common';
 
 @Module({
   imports: [
+    CommonModule,
     RepositoriesModule,
     PrismaModule,
     ClientsModule.register([
