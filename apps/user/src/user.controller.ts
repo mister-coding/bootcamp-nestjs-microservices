@@ -1,12 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CommonService } from '@app/common';
 
 @Controller()
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private common: CommonService,
+  ) {}
 
   @Get()
   getHello(): string {
+    return this.userService.getHello();
+  }
+
+  @Get('test-error')
+  testError() {
+    // throw new HttpException("Testing filter",HttpStatus.BAD_REQUEST)
     return this.userService.getHello();
   }
 
