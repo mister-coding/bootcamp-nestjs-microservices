@@ -4,11 +4,8 @@ import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-log
 
 @Controller()
 export class UserController {
-
-  private logger = new CustomLoggerService(UserController.name)
-  constructor(
-    private readonly userService: UserService,
-  ) {}
+  private logger = new CustomLoggerService(UserController.name);
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   getHello(): string {
@@ -17,12 +14,18 @@ export class UserController {
 
   @Get('list-all')
   async getUsers() {
-    this.logger.error("SSSSSSSSSSSSS")
-    throw new HttpException("Test errorrrrrrrr",HttpStatus.BAD_REQUEST)
+    this.logger.error('SSSSSSSSSSSSS');
+    throw new HttpException('Test errorrrrrrrr', HttpStatus.BAD_REQUEST);
     // const data = await this.userService.getUsers();
     // return {
     //   data,
     //   message: 'List user success',
     // };
+  }
+
+  @Get('test-error')
+  testError() {
+    throw new HttpException("Test Error",HttpStatus.BAD_REQUEST)
+    return true;
   }
 }
