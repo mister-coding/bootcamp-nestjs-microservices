@@ -5,25 +5,25 @@ import { RepositoriesModule } from '@app/repositories';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { PrismaModule } from '@app/prisma';
 import { CommonModule } from '@app/common';
+import natsConfig from 'config/nats';
+import { services } from 'constant/services';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.initSentry(),
     PrismaModule,
     RepositoriesModule,
     ClientsModule.register([
       {
-        name: 'NOTIF_SERVICE',
+        name: services.NOTIF_SERVICE,
         transport: Transport.NATS,
         options: {
-          servers: ['nats://nats:4222'],
+          servers: natsConfig().servers,
         },
       },
     ]),
   ],
   controllers: [UserController],
-  providers: [
-    UserService
-  ],
+  providers: [UserService],
 })
 export class UserModule {}

@@ -2,6 +2,7 @@ import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CommonService } from '@app/common';
 
+
 @Controller()
 export class UserController {
   constructor(
@@ -16,6 +17,7 @@ export class UserController {
 
   @Get('test-error')
   testError() {
+    this.common.logger.error('Test Config error 2');
     // throw new HttpException("Testing filter",HttpStatus.BAD_REQUEST)
     return this.userService.getHello();
   }

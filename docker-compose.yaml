@@ -100,7 +100,7 @@ services:
       - 80:80
     depends_on:
       - user
-      # - product
+      - product
       # - payment
       # - shipping
       # - media
