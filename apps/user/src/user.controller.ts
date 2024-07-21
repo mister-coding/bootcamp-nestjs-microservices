@@ -15,7 +15,8 @@ export class UserController {
   @Get('list-all')
   async getUsers() {
     this.logger.error('SSSSSSSSSSSSS');
-    throw new HttpException('Test errorrrrrrrr', HttpStatus.BAD_REQUEST);
+    // throw new HttpException('Test errorrrrrrrr', HttpStatus.BAD_REQUEST);
+    throw new Error("My first Sentry error!");
     // const data = await this.userService.getUsers();
     // return {
     //   data,
@@ -25,6 +26,7 @@ export class UserController {
 
   @Get('test-error')
   testError() {
+    throw new Error("My first Sentry error!");
     throw new HttpException("Test Error",HttpStatus.BAD_REQUEST)
     return true;
   }
