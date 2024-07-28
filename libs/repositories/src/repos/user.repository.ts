@@ -38,6 +38,13 @@ export class UserRepository {
     });
   }
 
+  //Create User
+  async createUser(data: Prisma.userCreateInput) {
+    return await this.table.create({
+      data: data,
+    });
+  }
+
   async getUserByCustom(where: Prisma.userWhereInput) {
     return await this.table.findMany({
       where: where,

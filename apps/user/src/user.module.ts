@@ -7,6 +7,7 @@ import { PrismaModule } from '@app/prisma';
 import { CommonModule } from '@app/common';
 import natsConfig from 'config/nats';
 import { services } from 'constant/services';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { services } from 'constant/services';
         },
       },
     ]),
+    AuthModule,
   ],
   controllers: [UserController],
   providers: [UserService],

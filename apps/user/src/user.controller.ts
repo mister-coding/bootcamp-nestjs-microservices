@@ -1,8 +1,9 @@
 import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CommonService } from '@app/common';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('Users')
 @Controller()
 export class UserController {
   constructor(
@@ -11,23 +12,9 @@ export class UserController {
   ) {}
 
   @Get()
-  getHello(): string {
-    return this.userService.getHello();
-  }
-
-  @Get('test-error')
-  testError() {
-    this.common.logger.error('Test Config error 2');
-    // throw new HttpException("Testing filter",HttpStatus.BAD_REQUEST)
-    return this.userService.getHello();
-  }
-
-  @Get('list-all')
-  async getUsers() {
-    const data = await this.userService.getUsers();
+  getHello() {
     return {
-      data,
-      message: 'get users success',
+      message: this.userService.getHello()
     };
   }
 }

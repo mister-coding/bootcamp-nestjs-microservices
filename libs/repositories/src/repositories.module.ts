@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { RepositoriesService } from './repositories.service';
 import { UserRepository } from './repos/user.repository';
 import { PrismaModule } from '@app/prisma';
@@ -26,6 +26,7 @@ const repos = [
   StockHistoryRepository
 ];
 
+@Global()
 @Module({
   imports: [PrismaModule],
   providers: [...repos],
