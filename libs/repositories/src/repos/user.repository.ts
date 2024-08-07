@@ -6,12 +6,22 @@ import { Prisma, user_level } from '@prisma/client';
 export class UserRepository {
   constructor(private prismaService: PrismaService) {}
 
+  user_select: Prisma.userSelect = {
+    id: true,
+    name: true,
+    email: true,
+    avatar: true,
+    user_level: true,
+  };
+
   get table() {
     return this.prismaService.user;
   }
 
   async getAllUsers() {
-    return await this.table.findMany();
+    return await this.table.findMany({
+      select: this.user_select,
+    });
   }
 
   async getUserByEmail(email: string) {
@@ -27,6 +37,7 @@ export class UserRepository {
       where: {
         id: id,
       },
+      select: this.user_select,
     });
   }
 
@@ -35,6 +46,7 @@ export class UserRepository {
       where: {
         user_level: level,
       },
+      select: this.user_select,
     });
   }
 

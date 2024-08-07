@@ -8,9 +8,11 @@ import { CommonModule } from '@app/common';
 import natsConfig from 'config/nats';
 import { services } from 'constant/services';
 import { AuthModule } from './auth/auth.module';
+import { AuthModule as LibAuthModule } from '@app/auth';
 
 @Module({
   imports: [
+    LibAuthModule,
     CommonModule.initSentry(),
     PrismaModule,
     RepositoriesModule,

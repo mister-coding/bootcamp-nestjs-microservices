@@ -9,6 +9,7 @@ import { ShippingRepository } from './repos/shipping.repository';
 import { StockRepository } from './repos/stock.repository';
 import { StockHistoryRepository } from './repos/stock-history.repository';
 import { NotificationRepository } from './repos/notification.repository';
+import { ForgotPasswordRepository } from './repos/forgot-password.repository';
 
 @Injectable()
 export class RepositoriesService {
@@ -22,7 +23,8 @@ export class RepositoriesService {
     private shippingRepo: ShippingRepository,
     private stockRepo: StockRepository,
     private stockHistoryRepo: StockHistoryRepository,
-    private notificationRepo: NotificationRepository
+    private notificationRepo: NotificationRepository,
+    private forgotPasswordRepository: ForgotPasswordRepository,
   ) {}
 
   // MongoDB
@@ -66,5 +68,7 @@ export class RepositoriesService {
     return this.notificationRepo;
   }
 
-
+  get forgotPassword() {
+    return this.forgotPasswordRepository;
+  }
 }

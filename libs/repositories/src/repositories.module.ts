@@ -11,6 +11,7 @@ import { OrderRepository } from './repos/order.repository';
 import { PaymentRepository } from './repos/payment.repository';
 import { StockRepository } from './repos/stock.repository';
 import { StockHistoryRepository } from './repos/stock-history.repository';
+import { ForgotPasswordRepository } from './repos/forgot-password.repository';
 
 const repos = [
   RepositoriesService, 
@@ -23,7 +24,8 @@ const repos = [
   NotificationRepository,
   PaymentRepository,
   StockRepository,
-  StockHistoryRepository
+  StockHistoryRepository,
+  ForgotPasswordRepository
 ];
 
 @Global()

@@ -1,8 +1,25 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register-dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { LoginDto } from './dto/login-dto';
+import { AuthGuard } from '@app/auth/auth/auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -49,6 +66,34 @@ export class AuthController {
     return {
       data: await this.authService.login(data),
       message: 'Login user',
+    };
+  }
+
+  @ApiOperation({ summary: 'Profile user', description: 'Get profile user' })
+  @ApiBearerAuth('accessToken')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  @Get('profile')
+  async getProfile(@Request() req) {
+    const user = await this.authService.profile(req.user.id);
+    return {
+      data: user,
+      message: 'get profile success',
+    };
+  }
+
+  @ApiOperation({
+    summary: 'Send forgot password',
+    description: 'Send forgot password via email',
+  })
+  @ApiParam({name:"email"})
+  @HttpCode(HttpStatus.OK)
+  @Get('sendForgotPasswordEmail/:email')
+  async SendForgotPasswordEmail(@Param('email') email) {
+    const token = await this.authService.sendForgotPasswordEmail(email);
+    return {
+      data: token,
+      message: 'get profile success',
     };
   }
 }
