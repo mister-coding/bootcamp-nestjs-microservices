@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   getHello(): string {
-    this.client.emit('TEST_USER', { name: 'John doe testing' });
+    this.client.emit('AUTH_NOTIFICATION', { name: 'John doe testing' });
     return 'User services';
   }
 

@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -15,11 +16,13 @@ import {
   ApiBearerAuth,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { LoginDto } from './dto/login-dto';
 import { AuthGuard } from '@app/auth/auth/auth.guard';
+import { ResetPasswordDto } from './dto/reset-password-dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -86,7 +89,7 @@ export class AuthController {
     summary: 'Send forgot password',
     description: 'Send forgot password via email',
   })
-  @ApiParam({name:"email"})
+  @ApiParam({ name: 'email' })
   @HttpCode(HttpStatus.OK)
   @Get('sendForgotPasswordEmail/:email')
   async SendForgotPasswordEmail(@Param('email') email) {
@@ -94,6 +97,34 @@ export class AuthController {
     return {
       data: token,
       message: 'get profile success',
+    };
+  }
+
+  @ApiOperation({
+    summary: 'Check token expired',
+    description: 'Check token expired or not',
+  })
+  @ApiQuery({ name: 'token' })
+  @HttpCode(HttpStatus.OK)
+  @Get('checkTokenEpired')
+  async checkTokenEpired(@Query('token') token) {
+    const check = await this.authService.checkTokenEpired(token);
+    return {
+      data: check,
+      message: 'get profile success',
+    };
+  }
+
+  @ApiOperation({
+    summary: 'Check token expired',
+    description: 'Check token expired or not',
+  })
+  @HttpCode(HttpStatus.OK)
+  @Post('resetPassword')
+  async resetPassword(@Body() data: ResetPasswordDto) {
+    return {
+      data: await this.authService.resetPassword(data),
+      message: 'reset password success',
     };
   }
 }

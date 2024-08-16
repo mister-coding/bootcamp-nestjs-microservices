@@ -14,7 +14,7 @@ export class NotificationController {
   @EventPattern("TEST_USER")
   testuser(data:any){
     console.log("TEST USER NATS ",data);
-    
+    return data
   }
 
 

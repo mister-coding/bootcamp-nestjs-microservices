@@ -59,6 +59,12 @@
       ],
       "@app/common/*": [
         "libs/common/src/*"
+      ],
+      "@app/mail": [
+        "libs/mail/src"
+      ],
+      "@app/mail/*": [
+        "libs/mail/src/*"
       ]
     }
   }
