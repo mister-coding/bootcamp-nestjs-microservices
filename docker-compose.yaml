@@ -44,7 +44,7 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev media"
+    command: bash -c "yarn && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev media"
 
   notification:
     image: node:18
@@ -113,7 +113,7 @@ services:
       # - product
       # - payment
       # - shipping
-      # - media
+      - media
       # - order
 
 volumes:
