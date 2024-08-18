@@ -13,4 +13,20 @@ export class MediaRepository {
   async create(data: Prisma.mediaCreateInput) {
     return await this.table.create({ data });
   }
+
+  async findMediaById(media_id: string) {
+    return await this.table.findFirst({
+      where: {
+        id: media_id,
+      },
+    });
+  }
+
+  async removeMediaById(media_id: string) {
+    return await this.table.delete({
+      where: {
+        id: media_id,
+      },
+    });
+  }
 }

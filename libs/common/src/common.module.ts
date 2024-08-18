@@ -12,12 +12,16 @@ import { CustomLoggerService } from './logger/custom-logger/custom-logger.servic
 import { ConfigModule } from '@nestjs/config';
 import setryConfig from 'config/sentry';
 import { HttpLoggerMiddleware } from './middlewares/http-logger/http-logger.middleware';
+import awsConfig from 'config/aws.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [setryConfig],
+      load: [
+        setryConfig,
+        awsConfig,
+      ],
     }),
   ],
   providers: [

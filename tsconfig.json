@@ -65,6 +65,12 @@
       ],
       "@app/mail/*": [
         "libs/mail/src/*"
+      ],
+      "@app/awss3": [
+        "libs/awss3/src"
+      ],
+      "@app/awss3/*": [
+        "libs/awss3/src/*"
       ]
     }
   }

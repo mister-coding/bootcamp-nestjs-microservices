@@ -30,6 +30,7 @@
     "@nestjs/swagger": "^7.4.0",
     "@prisma/client": "5.16.1",
     "@sentry/nestjs": "^8.19.0",
+    "aws-sdk": "^2.1677.0",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
@@ -95,7 +96,8 @@
       "^@app/broker(|/.*)$": "<rootDir>/libs/broker/src/$1",
       "^@app/worker(|/.*)$": "<rootDir>/libs/worker/src/$1",
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
-      "^@app/mail(|/.*)$": "<rootDir>/libs/mail/src/$1"
+      "^@app/mail(|/.*)$": "<rootDir>/libs/mail/src/$1",
+      "^@app/awss3(|/.*)$": "<rootDir>/libs/awss3/src/$1"
     }
   }
 }
