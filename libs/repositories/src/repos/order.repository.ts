@@ -1,5 +1,6 @@
 import { PrismaService } from '@app/prisma';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class OrderRepository {
@@ -7,6 +8,35 @@ export class OrderRepository {
 
   get table() {
     return this.prismaService.order;
+  }
+
+  async create(data: Prisma.orderCreateInput) {
+    return await this.table.create({ data });
+  }
+
+  async findById(order_id:string){
+    return await this.table.findFirst({
+      where:{
+        id: order_id
+      },
+      include:{
+        user: {
+          select:{
+            id: true,
+            email: true,
+            name: true,
+            phone: true
+          }
+        },
+        payment: true,
+        shipping: true,
+        order_item: {
+          include:{
+            product: true
+          }
+        }
+      }
+    })
   }
 
 }

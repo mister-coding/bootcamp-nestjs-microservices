@@ -16,6 +16,8 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
+    env_file:
+      - .env
     command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev product"
   
   payment:
@@ -37,13 +39,17 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev order"
+    env_file:
+      - .env
+    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev order"
 
   media:
     image: node:18
     working_dir: /app
     volumes:
       - ./:/app
+    env_file:
+      - .env
     command: bash -c "yarn &&  yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev media"
 
   notification:

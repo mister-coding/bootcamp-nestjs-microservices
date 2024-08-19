@@ -4,12 +4,14 @@ import { NotificationService } from './notification.service';
 import { MailModule } from '@app/mail';
 import { MailNotificationModule } from './mail-notification/mail-notification.module';
 import { CommonModule } from '@app/common';
+import { RepositoriesModule } from '@app/repositories';
 
 @Module({
   imports: [
     CommonModule,
     MailModule, 
-    MailNotificationModule
+    MailNotificationModule,
+    RepositoriesModule
   ],
   controllers: [NotificationController],
   providers: [NotificationService],

@@ -8,3 +8,11 @@ export type NOTIFICATION_AUTH_DATA = {
   email: string;
   token?: string;
 };
+
+export type OrderData = {
+  order_id: string;
+};
+
+export type NOTIFICATION_ORDER_SUCCESS = {
+  data: OrderData;
+};
