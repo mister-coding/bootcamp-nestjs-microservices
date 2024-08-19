@@ -14,7 +14,14 @@ import { cwd } from 'process';
         options: {
           url: 'order:50051',
           package: 'order',
-          protoPath: join(cwd(), './proto/order.proto'),
+          protoPath: [
+            join(cwd(), './proto/order.proto'),
+            join(cwd(), './proto/user.proto'),
+            join(cwd(), './proto/product.proto'),
+            join(cwd(), './proto/payment.proto'),
+            join(cwd(), './proto/shipping.proto'),
+            join(cwd(), './proto/common/enums.proto'),
+          ],
         },
       },
     ]),

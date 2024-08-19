@@ -111,7 +111,7 @@ export class MailNotificationService {
     // );
 
     this.orderService.getOrder(orderRequest, (err, response) => {
-     
+      new CustomLoggerService().warn("Notification Order  GRPC : ",response)
       if (err) {
         console.error(err);
       } else {
