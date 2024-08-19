@@ -21,6 +21,6 @@ export class MailNotificationController {
 
   @EventPattern(broker.mail.NEW_ORDER_SUCCESS)
   newOrderSuccess(data: OrderData) {
-   this.maileNotifService.mailNotifOrderSuccess(data)
+   this.maileNotifService.mailNotifOrderSuccessGrpc(data)
   }
 }

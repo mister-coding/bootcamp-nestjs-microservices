@@ -12,6 +12,9 @@ import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@app/auth/auth/auth.guard';
+import { GrpcMethod } from '@nestjs/microservices';
+import { GetOrderRequest } from 'grpc/order/GetOrderRequest';
+import { GetOrderResponse } from 'grpc/order/GetOrderResponse';
 
 @ApiTags('Orders')
 @Controller()
@@ -35,5 +38,12 @@ export class OrderController {
       data: createorder,
       message: 'create order success',
     };
+  }
+
+  @GrpcMethod('OrderService', 'GetOrder')
+  async getOrder(data: GetOrderRequest): Promise<GetOrderResponse> {
+    console.log('GRRRRRRRRRRRRRRRR');
+
+    return this.orderService.getOrderGrpc(data);
   }
 }
