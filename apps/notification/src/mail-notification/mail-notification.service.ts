@@ -1,7 +1,7 @@
 import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
 import { RepositoriesService } from '@app/repositories';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { GetOrderRequest } from 'grpc/order/GetOrderRequest';
 import { GetOrderResponse } from 'grpc/order/GetOrderResponse';
@@ -15,7 +15,7 @@ import {
 } from 'types/notification';
 
 @Injectable()
-export class MailNotificationService {
+export class MailNotificationService implements OnModuleInit{
   constructor(
     private readonly mailerService: MailerService,
     private repos: RepositoriesService,
@@ -103,44 +103,45 @@ export class MailNotificationService {
   }
 
   async mailNotifOrderSuccessGrpc(data: OrderData) {
-    new CustomLoggerService().warn("Notification Order Success : ",data)
+    new CustomLoggerService().warn("Notification Order Success GRPC: ",data)
     // const order = await this.repos.order.findById(data.order_id);
     const orderRequest: GetOrderRequest = { id: data.order_id };
+    // return this.orderService.GetOrder(orderRequest);
     // const orderResponse: GetOrderResponse = await firstValueFrom(
     //   this.orderService.GetOrder(orderRequest),
     // );
 
-    this.orderService.getOrder(orderRequest, (err, response) => {
-      new CustomLoggerService().warn("Notification Order  GRPC : ",response)
-      if (err) {
-        console.error(err);
-      } else {
-        const order = response.order;
-        this.mailerService
-          .sendMail({
-            to: order.user.email, // list of receivers
-            subject: 'New order ' + order.orderNo, // Subject line
-            template: 'order/new-order',
-            context: {
-              ...order,
-              payment: order.payment[0],
-              shipping: order.shipping[0],
-            },
-          })
-          .then(() => {
-            new CustomLoggerService().debug(
-              'Success send email new order :',
-              order,
-            );
-          })
-          .catch((err) => {
-            new CustomLoggerService().error(
-              'Error send email forgot password :',
-              err,
-            );
-          });
-      }
-    });
+    // this.orderService.getOrder(orderRequest, (err, response) => {
+    //   new CustomLoggerService().warn("Notification Order  GRPC : ",response)
+    //   if (err) {
+    //     console.error(err);
+    //   } else {
+    //     const order = response.order;
+    //     this.mailerService
+    //       .sendMail({
+    //         to: order.user.email, // list of receivers
+    //         subject: 'New order ' + order.orderNo, // Subject line
+    //         template: 'order/new-order',
+    //         context: {
+    //           ...order,
+    //           payment: order.payment[0],
+    //           shipping: order.shipping[0],
+    //         },
+    //       })
+    //       .then(() => {
+    //         new CustomLoggerService().debug(
+    //           'Success send email new order :',
+    //           order,
+    //         );
+    //       })
+    //       .catch((err) => {
+    //         new CustomLoggerService().error(
+    //           'Error send email forgot password :',
+    //           err,
+    //         );
+    //       });
+    //   }
+    // });
   }
   
 }

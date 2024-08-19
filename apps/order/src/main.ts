@@ -36,7 +36,7 @@ app.useGlobalPipes(new ValidationPipe())
   const grpcMicroservice = app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
-      url: 'localhost:50051',
+      url: '0.0.0.0:50052',
       package: 'order',
       protoPath: [
         join(cwd(), './proto/order.proto'),

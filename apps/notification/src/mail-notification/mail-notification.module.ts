@@ -12,7 +12,7 @@ import { cwd } from 'process';
         name: 'ORDER_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'order:50051',
+          url: 'order:50052',
           package: 'order',
           protoPath: [
             join(cwd(), './proto/order.proto'),

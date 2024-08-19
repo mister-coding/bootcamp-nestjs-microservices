@@ -43,7 +43,6 @@ export class OrderController {
   @GrpcMethod('OrderService', 'GetOrder')
   async getOrder(data: GetOrderRequest): Promise<GetOrderResponse> {
     console.log('GRRRRRRRRRRRRRRRR');
-
     return this.orderService.getOrderGrpc(data);
   }
 }
