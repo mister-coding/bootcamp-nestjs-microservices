@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package common;
+
+enum OrderStatus {
+  PENDING = 0;
+  ON_PROCESS = 1;
+  FAILED = 2;
+  CANCEL = 3;
+  DONE = 4;
+}
+
+enum PaymentStatus {
+  UNPAID = 0;
+  FAILED = 1;
+  CANCEL = 2;
+  PAID = 3;
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER = 0;
+  CASH = 1;
+  EWALLET = 2;
+}
+
+enum ShippingStatus {
+  PENDING = 0;
+  DONE = 1;
+  FAILED = 2;
+}

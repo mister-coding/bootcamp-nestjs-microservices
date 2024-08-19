@@ -71,6 +71,12 @@
       ],
       "@app/awss3/*": [
         "libs/awss3/src/*"
+      ],
+      "@app/grpc": [
+        "libs/grpc/src"
+      ],
+      "@app/grpc/*": [
+        "libs/grpc/src/*"
       ]
     }
   }

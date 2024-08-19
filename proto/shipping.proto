@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+import "common/enums.proto";
+
+package shipping;
+
+message Shipping {
+  string id = 1;
+  string order_id = 2;
+  string receive_name = 3;
+  string receive_address = 4;
+  string receive_phone = 5;
+  common.ShippingStatus shipping_status = 6;
+}

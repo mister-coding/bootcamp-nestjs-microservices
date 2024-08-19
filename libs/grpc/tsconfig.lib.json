@@ -1,10 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": false,
-    "outDir": "../../dist/apps/order",
-    "assets": ["../../**/*.proto"],
-    "watchAssets": true
+    "declaration": true,
+    "outDir": "../../dist/libs/grpc"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]

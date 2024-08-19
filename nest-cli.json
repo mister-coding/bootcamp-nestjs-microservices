@@ -171,6 +171,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/awss3/tsconfig.lib.json"
       }
+    },
+    "grpc": {
+      "type": "library",
+      "root": "libs/grpc",
+      "entryFile": "index",
+      "sourceRoot": "libs/grpc/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/grpc/tsconfig.lib.json"
+      }
     }
   }
 }

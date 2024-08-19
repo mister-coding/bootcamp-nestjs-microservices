@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "common/enums.proto";
+
+package payment;
+
+message Payment {
+  string id = 1;
+  string order_id = 2;
+  int32 amount = 3;
+  common.PaymentStatus payment_status = 4;
+  common.PaymentMethod payment_method = 5;
+}
