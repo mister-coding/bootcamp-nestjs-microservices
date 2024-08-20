@@ -33,7 +33,7 @@ app.useLogger(app.get(CustomLoggerService));
 app.useGlobalPipes(new ValidationPipe())
 
   // Create and configure gRPC microservice
-  const grpcMicroservice = app.connectMicroservice<MicroserviceOptions>({
+  app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
       url: '0.0.0.0:50052',
@@ -45,6 +45,17 @@ app.useGlobalPipes(new ValidationPipe())
         join(cwd(), './proto/payment.proto'),
         join(cwd(), './proto/shipping.proto'),
         join(cwd(), './proto/common/enums.proto'),
+      ],
+    },
+  });
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.GRPC,
+    options: {
+      url: '0.0.0.0:50053',
+      package: 'hero',
+      protoPath: [
+        join(cwd(), './proto/hero/hero.proto'),
       ],
     },
   });
