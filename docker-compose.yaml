@@ -41,6 +41,9 @@ services:
       - ./:/app
     env_file:
       - .env
+    ports:
+      - 50052:50052
+      - 50053:50053
     command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev order"
 
   media:

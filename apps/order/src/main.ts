@@ -7,6 +7,7 @@ import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-log
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { cwd } from 'process';
+import { ReflectionService } from '@grpc/reflection';
 
 async function bootstrap() {
   const app = await NestFactory.create(OrderModule);
@@ -36,6 +37,9 @@ app.useGlobalPipes(new ValidationPipe())
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
+      onLoadPackageDefinition: (pkg, server) => {
+        new ReflectionService(pkg).addToServer(server);
+      },
       url: '0.0.0.0:50052',
       package: 'order',
       protoPath: [
@@ -52,6 +56,9 @@ app.useGlobalPipes(new ValidationPipe())
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
+      onLoadPackageDefinition: (pkg, server) => {
+        new ReflectionService(pkg).addToServer(server);
+      },
       url: '0.0.0.0:50053',
       package: 'hero',
       protoPath: [
