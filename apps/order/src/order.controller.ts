@@ -32,10 +32,14 @@ interface HeroesService {
   findOne(data: { id: number }): Observable<any>;
 }
 
+interface OrderServiceGrpc {
+  getOrder(data: { id: string }): Observable<any>;
+}
+
 @ApiTags('Orders')
 @Controller()
 export class OrderController implements OnModuleInit {
-  private orderServiceGrpc: OrderServiceClient;
+  private orderServiceGrpc: OrderServiceGrpc;
   private heroesService: HeroesService;
 
   @Client({
@@ -51,23 +55,25 @@ export class OrderController implements OnModuleInit {
   @Client({
     transport: Transport.GRPC,
     options: {
-      url: '0.0.0.0:50052',
+      url: '192.168.1.102:50052',
       package: 'order',
-      protoPath: [
-        join(cwd(), './proto/order.proto'),
-        join(cwd(), './proto/user.proto'),
-        join(cwd(), './proto/product.proto'),
-        join(cwd(), './proto/payment.proto'),
-        join(cwd(), './proto/shipping.proto'),
-        join(cwd(), './proto/common/enums.proto'),
-      ],
+      protoPath: join(cwd(), './proto/order.proto'),
+      // loader: {
+      //   includeDirs: [
+      //     join(cwd(), './proto/user.proto'),
+      //     join(cwd(), './proto/product.proto'),
+      //     join(cwd(), './proto/payment.proto'),
+      //     join(cwd(), './proto/shipping.proto'),
+      //     join(cwd(), './proto/common/enums.proto'),
+      //   ],
+      // },
     },
   })
   client: ClientGrpc;
 
   onModuleInit() {
     this.orderServiceGrpc =
-      this.client.getService<OrderServiceClient>('OrderService');
+      this.client.getService<OrderServiceGrpc>('OrderService');
     this.heroesService =
       this.clients.getService<HeroesService>('HeroesService');
   }
@@ -88,33 +94,30 @@ export class OrderController implements OnModuleInit {
       id: '38173f01-948c-4b35-a25b-1a94607654bb',
     };
     
-
-    // const data = new Promise((resolve, reject) => {
-    //   this.orderServiceGrpc.GetOrder(orderRequest, (err, response) => {
-    //     if (err) {
-    //       return reject(err);
-    //     }
-    //     resolve(response);
-    //   });
-    // });
+      
 
     // const dataOrder = await firstValueFrom()
 
+    // console.log(await datas);
     
-    this.orderServiceGrpc.getOrder(orderRequest, null, null,(err,res)=>{
-      console.log("res :",res);
-      console.log("err :",err);
-    })
+
+    
+    // this.orderServiceGrpc.getOrder(orderRequest, (err,res)=>{
+    //   console.log("res :",res);
+    //   console.log("err :",err);
+    // })
 
     // const order: Observable<GetOrderResponse> = this.orderServiceGrpc.getOrder(orderRequest);
     
+  const dd = this.orderServiceGrpc.getOrder({id:'38173f01-948c-4b35-a25b-1a94607654bb'});
 
     const data = this.heroesService.findOne({ id: 2 });
 
     const res = await firstValueFrom(data);
+    const res2 = await firstValueFrom(dd);
 
     return {
-      data: res,
+      data: res2,
       message: 'grpc',
     };
   }
@@ -128,14 +131,13 @@ export class OrderController implements OnModuleInit {
     return items.find(({ id }) => id === data.id);
   }
 
-  @GrpcMethod('OrderService')
+  @GrpcMethod('OrderService','GetOrder')
   async getOrder(
     data: GetOrderRequest,
     metadata: Metadata,
     call: ServerUnaryCall<any, any>,
-  ): Promise<GetOrderResponse> {
-    console.log('GRRRRRRRRRRRRRRRR');
-    return this.orderService.getOrderGrpc(data);
+  ){
+    return await this.orderService.getOrderGrpc(data);
   }
 
   @ApiOperation({ summary: 'New order', description: 'New order products' })

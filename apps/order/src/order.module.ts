@@ -24,24 +24,26 @@ import { cwd } from 'process';
         },
       },
     ]),
-    ClientsModule.register([
-      {
-        name: 'ORDER_PACKAGE',
-        transport: Transport.GRPC,
-        options: {
-          url: '0.0.0.0:50052',
-          package: 'order',
-          protoPath: [
-            join(cwd(), './proto/order.proto'),
-            join(cwd(), './proto/user.proto'),
-            join(cwd(), './proto/product.proto'),
-            join(cwd(), './proto/payment.proto'),
-            join(cwd(), './proto/shipping.proto'),
-            join(cwd(), './proto/common/enums.proto'),
-          ],
-        },
-      },
-    ]),
+    // ClientsModule.register([
+    //   {
+    //     name: 'ORDER_PACKAGE',
+    //     transport: Transport.GRPC,
+    //     options: {
+    //       url: '0.0.0.0:50052',
+    //       package: 'order',
+    //       protoPath: join(cwd(), './proto/order.proto'),
+    //       loader: {
+    //         includeDirs: [
+    //           join(cwd(), './proto/user.proto'),
+    //           join(cwd(), './proto/product.proto'),
+    //           join(cwd(), './proto/payment.proto'),
+    //           join(cwd(), './proto/shipping.proto'),
+    //           join(cwd(), './proto/common/enums.proto'),
+    //         ],
+    //       },
+    //     },
+    //   },
+    // ]),
   ],
   controllers: [OrderController],
   providers: [OrderService],

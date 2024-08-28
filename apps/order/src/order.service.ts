@@ -114,21 +114,21 @@ export class OrderService {
           product_name: item.product.product_name,
         },
       })),
-      shipping: order.shipping.map((ship) => ({
-        id: ship.id,
-        order_id: ship.order_id,
-        receive_name: ship.receive_name,
-        receive_address: ship.receive_address,
-        receive_phone: ship.receive_phone,
-        shipping_status: ship.shipping_status as any,
-      })),
-      payment: order.payment.map((pay) => ({
-        id: pay.id,
-        order_id: pay.order_id,
-        amount: pay.amount,
-        payment_method: pay.payment_method as any,
-        payment_status: pay.payment_status as any,
-      })),
+      // shipping: order.shipping.map((ship) => ({
+      //   id: ship.id,
+      //   order_id: ship.order_id,
+      //   receive_name: ship.receive_name,
+      //   receive_address: ship.receive_address,
+      //   receive_phone: ship.receive_phone,
+      //   shipping_status: ship.shipping_status as any,
+      // })),
+      // payment: order.payment.map((pay) => ({
+      //   id: pay.id,
+      //   order_id: pay.order_id,
+      //   amount: pay.amount,
+      //   payment_method: pay.payment_method as any,
+      //   payment_status: pay.payment_status as any,
+      // })),
     };
 
     return { order: orderResponse };

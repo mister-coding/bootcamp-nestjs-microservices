@@ -20,6 +20,8 @@ export interface ProtoGrpcType {
     Order: MessageTypeDefinition
     OrderItem: MessageTypeDefinition
     OrderService: SubtypeConstructor<typeof grpc.Client, _order_OrderServiceClient> & { service: _order_OrderServiceDefinition }
+    Product: MessageTypeDefinition
+    User: MessageTypeDefinition
   }
   payment: {
     Payment: MessageTypeDefinition

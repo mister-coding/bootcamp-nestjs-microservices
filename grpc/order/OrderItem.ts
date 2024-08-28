@@ -1,6 +1,6 @@
 // Original file: proto/order.proto
 
-import type { Product as _product_Product, Product__Output as _product_Product__Output } from '../product/Product';
+import type { Product as _order_Product, Product__Output as _order_Product__Output } from '../order/Product';
 
 export interface OrderItem {
   'id'?: (string);
@@ -8,7 +8,7 @@ export interface OrderItem {
   'productId'?: (string);
   'qty'?: (number);
   'productPrice'?: (number);
-  'product'?: (_product_Product | null);
+  'product'?: (_order_Product | null);
 }
 
 export interface OrderItem__Output {
@@ -17,5 +17,5 @@ export interface OrderItem__Output {
   'productId'?: (string);
   'qty'?: (number);
   'productPrice'?: (number);
-  'product'?: (_product_Product__Output);
+  'product'?: (_order_Product__Output);
 }
