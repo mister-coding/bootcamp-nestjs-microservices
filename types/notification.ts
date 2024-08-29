@@ -16,3 +16,11 @@ export type OrderData = {
 export type NOTIFICATION_ORDER_SUCCESS = {
   data: OrderData;
 };
+
+export type PaymentConfirmationData = {
+  payment_id: string;
+};
+
+export type NOTIFICATION_PAYMENT_COFIRMATION = {
+  data: PaymentConfirmationData;
+};

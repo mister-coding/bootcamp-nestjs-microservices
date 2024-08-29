@@ -36,4 +36,20 @@ export class OrderController {
       message: 'create order success',
     };
   }
+
+  @ApiOperation({
+    summary: 'List order by user',
+    description: 'List order by user id',
+  })
+  @ApiBearerAuth('accessToken')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  @Get('all')
+  async getOrdersByUser(@Request() req) {
+    const data = await this.orderService.getOrdersByUser(req.user.id);
+    return {
+      data: data,
+      message: 'get user orders success',
+    };
+  }
 }

@@ -7,6 +7,7 @@ import {
   NOTIFICATION_AUTH_DATA,
   NOTIFICATION_ORDER_SUCCESS,
   OrderData,
+  PaymentConfirmationData,
 } from 'types/notification';
 
 @Injectable()
@@ -71,14 +72,40 @@ export class MailNotificationService {
         template: 'order/new-order',
         context: {
           ...order,
-          payment:order.payment[0],
-          shipping: order.shipping[0]
+          payment: order.payment[0],
+          shipping: order.shipping[0],
         },
       })
       .then(() => {
         new CustomLoggerService().debug(
           'Success send email new order :',
           order,
+        );
+      })
+      .catch((err) => {
+        new CustomLoggerService().error(
+          'Error send email forgot password :',
+          err,
+        );
+      });
+  }
+
+  async mailNotifPaymentConfirmation(data: PaymentConfirmationData) {
+    const payment = await this.repos.payment.getPaymentById(data.payment_id);
+    new CustomLoggerService().warn('Konfirmasi pembayaran success :', data);
+    this.mailerService
+      .sendMail({
+        to: "admin@tokoonline.com", // list of receivers
+        subject: 'Payment confirmation ' + payment.order.order_no, // Subject line
+        template: 'payment/payment-confirmation',
+        context: {
+          ...payment
+        },
+      })
+      .then(() => {
+        new CustomLoggerService().debug(
+          'Success send email new order :',
+          payment,
         );
       })
       .catch((err) => {

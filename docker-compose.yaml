@@ -25,7 +25,7 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
-    command: "yarn start:dev payment"
+    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev payment"
 
   shipping:
     image: node:18
@@ -129,11 +129,11 @@ services:
       - 80:80
     depends_on:
       - user
-      - product
-      # - payment
+      # - product
+      - payment
       # - shipping
       - media
-      # - order
+      - order
 
 volumes:
   dbdata:

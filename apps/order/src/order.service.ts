@@ -82,4 +82,8 @@ export class OrderService {
     }
     return createOrder;
   }
+
+  async getOrdersByUser(user_id: string) {
+    return await this.respos.order.findManyByUserId(user_id);
+  }
 }

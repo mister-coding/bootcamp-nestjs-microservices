@@ -39,4 +39,29 @@ export class OrderRepository {
     })
   }
 
+  async findManyByUserId(user_id:string){
+    return await this.table.findMany({
+      where:{
+        user_id: user_id
+      },
+      include:{
+        user: {
+          select:{
+            id: true,
+            email: true,
+            name: true,
+            phone: true
+          }
+        },
+        payment: true,
+        shipping: true,
+        order_item: {
+          include:{
+            product: true
+          }
+        }
+      }
+    })
+  }
+
 }
