@@ -5,6 +5,7 @@ import { services } from 'constant/services';
 import { ClientProxy } from '@nestjs/microservices';
 import { broker } from 'constant/broker';
 import { PaymentConfirmationData } from 'types/notification';
+import { UpdatePaymentStatusDto } from './dto/update-payment-status.dto';
 
 @Injectable()
 export class PaymentService {
@@ -31,6 +32,23 @@ export class PaymentService {
       payment_id: update.id,
     };
     this.client.emit(broker.mail.PAYMENT_CONFIRMATION, payload);
+    return update;
+  }
+
+  async updatePaymentStatus(data: UpdatePaymentStatusDto) {
+    const payment = await this.repos.payment.getPaymentById(data.payment_id);
+    if (!payment) {
+      throw new NotFoundException('Payment not found');
+    }
+    const update = await this.repos.payment.updatePaymentById(data.payment_id, {
+      payment_status: data.payment_status,
+    });
+    const payload: PaymentConfirmationData = {
+      payment_id: update.id,
+    };
+    if (data.payment_status == 'Paid') {
+      this.client.emit(broker.mail.PAYMENT_STATUS, payload);
+    }
     return update;
   }
 }

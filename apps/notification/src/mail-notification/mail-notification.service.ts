@@ -115,4 +115,30 @@ export class MailNotificationService {
         );
       });
   }
+
+  async mailNotifPaymentStatus(data: PaymentConfirmationData) {
+    const payment = await this.repos.payment.getPaymentById(data.payment_id);
+    new CustomLoggerService().warn('Konfirmasi pembayaran success :', data);
+    this.mailerService
+      .sendMail({
+        to: payment.order.user.email, // list of receivers
+        subject: 'Payment Status ' + payment.order.order_no, // Subject line
+        template: 'payment/payment-status',
+        context: {
+          ...payment
+        },
+      })
+      .then(() => {
+        new CustomLoggerService().debug(
+          'Success send email new order :',
+          payment,
+        );
+      })
+      .catch((err) => {
+        new CustomLoggerService().error(
+          'Error send email forgot password :',
+          err,
+        );
+      });
+  }
 }

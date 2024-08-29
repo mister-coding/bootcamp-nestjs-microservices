@@ -28,4 +28,11 @@ export class MailNotificationController {
   mailNotifPaymentConfirmation(data: PaymentConfirmationData) {
    this.maileNotifService.mailNotifPaymentConfirmation(data)
   }
+
+  @EventPattern(broker.mail.PAYMENT_STATUS)
+  mailNotifPaymentStatus(data: PaymentConfirmationData) {
+   this.maileNotifService.mailNotifPaymentStatus(data)
+  }
+
+
 }
