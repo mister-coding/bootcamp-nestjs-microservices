@@ -8,6 +8,7 @@ import {
   NOTIFICATION_ORDER_SUCCESS,
   OrderData,
   PaymentConfirmationData,
+  ShippingDataNotification,
 } from 'types/notification';
 
 @Injectable()
@@ -132,6 +133,32 @@ export class MailNotificationService {
         new CustomLoggerService().debug(
           'Success send email new order :',
           payment,
+        );
+      })
+      .catch((err) => {
+        new CustomLoggerService().error(
+          'Error send email forgot password :',
+          err,
+        );
+      });
+  }
+
+  async mailNotifShippingStatus(data: ShippingDataNotification) {
+    const shipping = await this.repos.shipping.findById(data.shipping_id);
+    new CustomLoggerService().warn('Notifikasi shipping status :', data);
+    this.mailerService
+      .sendMail({
+        to: shipping.order.user.email, // list of receivers
+        subject: 'Shiping Status ' + shipping.order.order_no, // Subject line
+        template: 'shipping/update-status',
+        context: {
+          ...shipping
+        },
+      })
+      .then(() => {
+        new CustomLoggerService().debug(
+          'Success send email new order :',
+          shipping,
         );
       })
       .catch((err) => {

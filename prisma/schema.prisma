@@ -36,7 +36,6 @@ model user {
   @@index([id, email])
 }
 
-
 model forgot_password {
   id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email      String    @unique
@@ -143,6 +142,7 @@ model order_item {
 
 enum shipping_status {
   Pending
+  Delivery
   Done
   Failed
 }
@@ -154,6 +154,11 @@ model shipping {
   receive_email   String?
   receive_name    String?
   receive_phone   String?
+  notes           String?
+  courier_name    String?
+  courier_phone   String?
+  shipping_no     String?
+  adm_notes       String?
   shipping_status shipping_status @default(Pending)
   created_at      DateTime        @default(now())
   updated_at      DateTime        @default(now()) @updatedAt

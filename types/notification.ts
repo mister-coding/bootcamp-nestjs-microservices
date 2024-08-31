@@ -24,3 +24,12 @@ export type PaymentConfirmationData = {
 export type NOTIFICATION_PAYMENT_COFIRMATION = {
   data: PaymentConfirmationData;
 };
+
+export type ShippingDataNotification = {
+  shipping_id: string;
+};
+
+export type NOTIFICATION_SHIPPING = {
+  data: ShippingDataNotification;
+};
+

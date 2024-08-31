@@ -3,7 +3,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Controller } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { broker } from 'constant/broker';
-import { NOTIFICATION_AUTH, NOTIFICATION_ORDER_SUCCESS, OrderData, PaymentConfirmationData } from 'types/notification';
+import { NOTIFICATION_AUTH, NOTIFICATION_ORDER_SUCCESS, OrderData, PaymentConfirmationData, ShippingDataNotification } from 'types/notification';
 import { MailNotificationService } from './mail-notification.service';
 
 @Controller('mail-notification')
@@ -32,6 +32,11 @@ export class MailNotificationController {
   @EventPattern(broker.mail.PAYMENT_STATUS)
   mailNotifPaymentStatus(data: PaymentConfirmationData) {
    this.maileNotifService.mailNotifPaymentStatus(data)
+  }
+
+  @EventPattern(broker.mail.SHIPPING_STATUS)
+  mailNotifShippingStatus(data: ShippingDataNotification) {
+   this.maileNotifService.mailNotifShippingStatus(data)
   }
 
 
