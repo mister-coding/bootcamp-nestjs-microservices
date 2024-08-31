@@ -70,31 +70,68 @@ export class StockService {
     return createStock;
   }
 
-  async removeStockSales(data: AddStockDto) {
-    let stock = await this.repos.stock.findByProduct(data.product_id);
-    if (!stock) {
-      const stockPayload: Prisma.stockCreateInput = {
-        stock: 0,
-        product: {
+  async removeStockSales(order_id: string) {
+    const order = await this.repos.order.findById(order_id);
+    const orderitem = order.order_item;
+    orderitem.forEach(async (item) => {
+      let stock = await this.repos.stock.findByProduct(item.product_id);
+      if (!stock) {
+        const stockPayload: Prisma.stockCreateInput = {
+          stock: 0,
+          product: {
+            connect: {
+              id: item.product_id,
+            },
+          },
+        };
+        stock = await this.repos.stock.create(stockPayload);
+      }
+      const stockHistory: Prisma.stock_historyCreateInput = {
+        stock_id: stock.id,
+        history_type: stock_history_type.OutSales,
+        external_id: order.id,
+        notes: order.notes,
+        amount: item.qty,
+        created_by: {
           connect: {
-            id: data.product_id,
+            id: order.user_id,
           },
         },
       };
-      stock = await this.repos.stock.create(stockPayload);
-    }
-    const stockHistory: Prisma.stock_historyCreateInput = {
-      stock_id: stock.id,
-      history_type: stock_history_type.Reject,
-      notes: data.notes,
-      amount: data.amount,
-      created_by: {
-        connect: {
-          id: data.user_id,
-        },
-      },
-    };
-    const createStock = await this.repos.stockHistory.create(stockHistory);
-    return createStock;
+      await this.repos.stockHistory.create(stockHistory);
+    });
   }
+
+  async returnStockSales(order_id: string) {
+    const order = await this.repos.order.findById(order_id);
+    const orderitem = order.order_item;
+    orderitem.forEach(async (item) => {
+      let stock = await this.repos.stock.findByProduct(item.product_id);
+      if (!stock) {
+        const stockPayload: Prisma.stockCreateInput = {
+          stock: 0,
+          product: {
+            connect: {
+              id: item.product_id,
+            },
+          },
+        };
+        stock = await this.repos.stock.create(stockPayload);
+      }
+      const stockHistory: Prisma.stock_historyCreateInput = {
+        stock_id: stock.id,
+        history_type: stock_history_type.Input,
+        external_id: order.id,
+        notes: order.notes,
+        amount: item.qty,
+        created_by: {
+          connect: {
+            id: order.user_id,
+          },
+        },
+      };
+      await this.repos.stockHistory.create(stockHistory);
+    });
+  }
+
 }

@@ -6,4 +6,8 @@ export const broker = {
     PAYMENT_STATUS: 'PAYMENT_STATUS',
     SHIPPING_STATUS: 'SHIPPING_STATUS',
   },
+  stock: {
+    SALES_STOCK: 'SALES_STOCK',
+    RETURN_SALES_STOCK: 'RETURN_SALES_STOCK',
+  },
 };

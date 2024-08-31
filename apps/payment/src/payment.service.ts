@@ -12,6 +12,7 @@ export class PaymentService {
   constructor(
     private repos: RepositoriesService,
     @Inject(services.NOTIF_SERVICE) private client: ClientProxy,
+    @Inject(services.STOCK_SERVICE) private clientStock: ClientProxy,
   ) {}
 
   getHello(): string {
@@ -48,6 +49,8 @@ export class PaymentService {
     };
     if (data.payment_status == 'Paid') {
       this.client.emit(broker.mail.PAYMENT_STATUS, payload);
+    }else if(data.payment_status == 'Cancel'){
+      this.clientStock.emit(broker.stock.RETURN_SALES_STOCK, {order_id:payment.order_id});
     }
     return update;
   }

@@ -6,12 +6,16 @@ import { services } from 'constant/services';
 import { ClientProxy } from '@nestjs/microservices';
 import { broker } from 'constant/broker';
 import { OrderData } from 'types/notification';
+import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
 
 @Injectable()
 export class OrderService {
+
+  private logger = new CustomLoggerService();
   constructor(
     private respos: RepositoriesService,
     @Inject(services.NOTIF_SERVICE) private client: ClientProxy,
+    @Inject(services.STOCK_SERVICE) private clientStock: ClientProxy,
   ) {}
 
   getHello(): string {
@@ -20,6 +24,8 @@ export class OrderService {
 
   async createNewOrder(data: CreateOrderDto) {
     let orderAmount = 0;
+
+    this.logger.log("Creae new order");
 
     const products = await this.respos.product.table.findMany({
       where: {
@@ -79,6 +85,7 @@ export class OrderService {
         order_id: createOrder.id,
       };
       this.client.emit(broker.mail.NEW_ORDER_SUCCESS, orderNotifPayload);
+      this.clientStock.emit(broker.stock.SALES_STOCK, orderNotifPayload);
     }
     return createOrder;
   }

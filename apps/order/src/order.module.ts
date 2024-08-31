@@ -22,6 +22,15 @@ import natsConfig from 'config/nats';
         },
       },
     ]),
+    ClientsModule.register([
+      {
+        name: services.STOCK_SERVICE,
+        transport: Transport.NATS,
+        options: {
+          servers: natsConfig().servers,
+        },
+      },
+    ]),
   ],
   controllers: [OrderController],
   providers: [OrderService],

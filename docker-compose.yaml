@@ -139,7 +139,7 @@ services:
     depends_on:
       - user
       - product
-      # - payment
+      - payment
       # - shipping
       # - media
       - order

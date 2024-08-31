@@ -13,11 +13,16 @@ import { StockService } from './stock.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AddStockDto } from './dto/add-stock.dto';
 import { AuthGuard } from '@app/auth/auth/auth.guard';
+import { EventPattern } from '@nestjs/microservices';
+import { broker } from 'constant/broker';
+import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
 
 @ApiTags('Stock')
 @Controller()
 export class StockController {
   constructor(private readonly stockService: StockService) {}
+
+  private logger = new CustomLoggerService();
 
   @Get()
   getHello(): string {
@@ -35,7 +40,7 @@ export class StockController {
   async addStock(@Body() data: AddStockDto, @Request() req) {
     data.user_id = req.user.id;
     const createStock = await this.stockService.addStock(data);
-    
+
     return {
       data: createStock,
       message: 'create stock success',
@@ -53,11 +58,22 @@ export class StockController {
   async removeStock(@Body() data: AddStockDto, @Request() req) {
     data.user_id = req.user.id;
     const createStock = await this.stockService.removeStock(data);
-    
+
     return {
       data: createStock,
       message: 'remove stock success',
     };
   }
 
+  @EventPattern(broker.stock.SALES_STOCK)
+  async salesStock(data: { order_id: string }) {
+    this.logger.warn('Sales stock :', data);
+    await this.stockService.removeStockSales(data.order_id);
+  }
+
+  @EventPattern(broker.stock.RETURN_SALES_STOCK)
+  async returnStockSales(data: { order_id: string }) {
+    this.logger.warn('Rerurn Sales stock :', data);
+    await this.stockService.returnStockSales(data.order_id);
+  }
 }
