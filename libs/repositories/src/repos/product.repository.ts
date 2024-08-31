@@ -25,6 +25,9 @@ export class ProductRepository {
       where: {
         deleted_at: null,
       },
+      include: {
+        stock: true,
+      },
     });
   }
 
@@ -32,30 +35,41 @@ export class ProductRepository {
     return await this.table.findMany({
       where: {
         deleted_at: null,
-        is_active: true
+        is_active: true,
+      },
+      include: {
+        stock: true,
       },
     });
   }
 
-  async findAllByUser(user_id:string) {
+  async findAllByUser(user_id: string) {
     return await this.table.findMany({
       where: {
         deleted_at: null,
-        created_by_id: user_id
+        created_by_id: user_id,
+      },
+      include: {
+        stock: true,
       },
     });
   }
 
-  async findOneById(id:string) {
+  async findOneById(id: string) {
     return await this.table.findFirst({
       where: {
         id: id,
+      },
+      include: {
+        stock: true,
       },
     });
   }
 
   async remove(id: string) {
-    return await this.table.update({ data:{deleted_at: new Date()}, where: { id } });
+    return await this.table.update({
+      data: { deleted_at: new Date() },
+      where: { id },
+    });
   }
-  
 }

@@ -19,6 +19,15 @@ services:
     env_file:
       - .env
     command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev product"
+
+  stock:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev stock"
   
   payment:
     image: node:18
@@ -129,11 +138,12 @@ services:
       - 80:80
     depends_on:
       - user
-      # - product
+      - product
       # - payment
-      - shipping
-      - media
+      # - shipping
+      # - media
       - order
+      - stock
 
 volumes:
   dbdata:

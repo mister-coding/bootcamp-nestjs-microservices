@@ -60,7 +60,7 @@ model product {
   deleted_at       DateTime?
 
   created_by user         @relation(fields: [created_by_id], references: [id])
-  stock      stock[]
+  stock      stock?
   order_item order_item[]
 
   @@index([id, created_by_id, slug, is_active])
@@ -68,7 +68,7 @@ model product {
 
 model stock {
   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  product_id String   @db.Uuid
+  product_id String   @db.Uuid @unique
   stock      Int      @default(0)
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
