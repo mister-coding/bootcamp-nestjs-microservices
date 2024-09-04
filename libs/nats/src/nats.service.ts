@@ -1,3 +1,4 @@
+import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
 import {
   Injectable,
   OnModuleInit,
@@ -29,6 +30,7 @@ export class NatsService implements OnModuleInit, OnModuleDestroy {
       .connect()
       .then(() => console.log('Connected to NATS'))
       .catch((error) => {
+        new CustomLoggerService().error('Nats error :', error);
         throw new InternalServerErrorException('Nats error :', error);
       });
   }
