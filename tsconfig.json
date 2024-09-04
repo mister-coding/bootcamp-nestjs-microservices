@@ -71,6 +71,12 @@
       ],
       "@app/awss3/*": [
         "libs/awss3/src/*"
+      ],
+      "@app/nats": [
+        "libs/nats/src"
+      ],
+      "@app/nats/*": [
+        "libs/nats/src/*"
       ]
     }
   }

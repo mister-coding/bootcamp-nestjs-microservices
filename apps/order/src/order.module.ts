@@ -7,12 +7,14 @@ import { RepositoriesModule } from '@app/repositories';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { services } from 'constant/services';
 import natsConfig from 'config/nats';
+import { NatsModule } from '@app/nats';
 
 @Module({
   imports: [
     AuthModule,
     CommonModule.initSentry(),
     RepositoriesModule,
+    NatsModule,
     ClientsModule.register([
       {
         name: services.NOTIF_SERVICE,

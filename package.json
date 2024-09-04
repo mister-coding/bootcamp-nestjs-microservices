@@ -99,7 +99,8 @@
       "^@app/worker(|/.*)$": "<rootDir>/libs/worker/src/$1",
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
       "^@app/mail(|/.*)$": "<rootDir>/libs/mail/src/$1",
-      "^@app/awss3(|/.*)$": "<rootDir>/libs/awss3/src/$1"
+      "^@app/awss3(|/.*)$": "<rootDir>/libs/awss3/src/$1",
+      "^@app/nats(|/.*)$": "<rootDir>/libs/nats/src/$1"
     }
   }
 }

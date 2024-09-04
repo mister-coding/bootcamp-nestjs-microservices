@@ -171,6 +171,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/awss3/tsconfig.lib.json"
       }
+    },
+    "nats": {
+      "type": "library",
+      "root": "libs/nats",
+      "entryFile": "index",
+      "sourceRoot": "libs/nats/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/nats/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -7,6 +7,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { broker } from 'constant/broker';
 import { OrderData } from 'types/notification';
 import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
+import { NatsService } from '@app/nats';
 
 @Injectable()
 export class OrderService {
@@ -16,6 +17,7 @@ export class OrderService {
     private respos: RepositoriesService,
     @Inject(services.NOTIF_SERVICE) private client: ClientProxy,
     @Inject(services.STOCK_SERVICE) private clientStock: ClientProxy,
+    private natsService: NatsService
   ) {}
 
   getHello(): string {
