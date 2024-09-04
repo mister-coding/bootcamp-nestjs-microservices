@@ -86,8 +86,10 @@ export class OrderService {
       const orderNotifPayload: OrderData = {
         order_id: createOrder.id,
       };
-      this.client.emit(broker.mail.NEW_ORDER_SUCCESS, orderNotifPayload);
-      this.clientStock.emit(broker.stock.SALES_STOCK, orderNotifPayload);
+      // this.client.emit(broker.mail.NEW_ORDER_SUCCESS, orderNotifPayload);
+      this.natsService.client.emit(broker.mail.NEW_ORDER_SUCCESS, orderNotifPayload);
+      this.natsService.client.emit(broker.stock.SALES_STOCK, orderNotifPayload);
+      // this.clientStock.emit(broker.stock.SALES_STOCK, orderNotifPayload);
     }
     return createOrder;
   }

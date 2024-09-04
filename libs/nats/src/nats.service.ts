@@ -13,7 +13,7 @@ import natsConfig from 'config/nats';
 
 @Injectable()
 export class NatsService implements OnModuleInit, OnModuleDestroy {
-  private client: ClientProxy;
+  public client: ClientProxy;
 
   constructor() {
     this.client = ClientProxyFactory.create({
