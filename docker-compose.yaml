@@ -12,36 +12,46 @@ services:
     # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev user"
 
   product:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./:/app
+    image: mistercodingdev/ecommerce-api-product-service:v1.0.0
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
+    depends_on:
+      - db
     env_file:
       - .env
-    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev product"
+    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev product"
 
   stock:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./:/app
+    image: mistercodingdev/ecommerce-api-stock-service:v1.0.0
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
     env_file:
       - .env
-    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev stock"
+    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev stock"
   
   payment:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./:/app
-    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev payment"
+    image: mistercodingdev/ecommerce-api-payment-service:v1.0.0
+    env_file:
+      - .env
+    depends_on:
+      - db
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
+    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev payment"
 
   shipping:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./:/app
-    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev shipping"
+    image: mistercodingdev/ecommerce-api-shipping-service:v1.0.0
+    env_file:
+      - .env
+    depends_on:
+      - db
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
+    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev shipping"
 
   order:
     image: node:18
@@ -53,24 +63,24 @@ services:
     command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev order"
 
   media:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./:/app
+    image: mistercodingdev/ecommerce-api-media-service:v1.0.0 
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
     env_file:
       - .env
-    command: bash -c "yarn &&  yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev media"
+    # command: bash -c "yarn &&  yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev media"
 
   notification:
-    image: node:18
-    working_dir: /app
+    image: mistercodingdev/ecommerce-api-notification-service:v1.0.0
+    # working_dir: /app
     env_file:
       - .env
     depends_on:
       - nats
-    volumes:
-      - ./:/app
-    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev notification"
+    # volumes:
+    #   - ./:/app
+    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev notification"
 
   db:
     image: postgres:15.3
