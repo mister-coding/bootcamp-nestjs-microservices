@@ -30,7 +30,7 @@ COPY --from=builder /usr/src/app/config ./config
 COPY --from=builder /usr/src/app/mail ./mail
 COPY --from=builder /usr/src/app/constant ./constant
 COPY --from=builder /usr/src/app/types ./types
-COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/dist/apps/user ./dist/apps/user
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 
 

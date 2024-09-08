@@ -1,7 +1,7 @@
 services:
 
   user:
-    image: mistercodingdev/ecommerce-api-user-service:v1.0.0
+    image: mistercodingdev/ecommerce-api-user-service:v.1.2
     # working_dir: /app
     # volumes:
     #   - ./:/app
