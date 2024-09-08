@@ -1,15 +1,15 @@
 services:
 
   user:
-    image: node:18
-    working_dir: /app
-    volumes:
-      - ./:/app
+    image: mistercodingdev/ecommerce-api-user-service:v1.0.0
+    # working_dir: /app
+    # volumes:
+    #   - ./:/app
     depends_on:
       - db
     env_file:
       - .env
-    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev user"
+    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev user"
 
   product:
     image: node:18
