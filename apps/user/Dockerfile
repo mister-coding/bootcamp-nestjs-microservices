@@ -1,4 +1,8 @@
-FROM node:18-alpine AS base
+# Base image
+FROM node:18-slim AS base
+
+# Install openssl in the base image
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 FROM base AS builder
 

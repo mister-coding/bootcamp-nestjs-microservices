@@ -15,6 +15,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { services } from 'constant/services';
 import { broker } from 'constant/broker';
 import { NOTIFICATION_AUTH } from 'types/notification';
+import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +40,7 @@ export class AuthService {
         return true;
       }
     } catch (error) {
+      new CustomLoggerService(AuthService.name).error(error);
       throw new InternalServerErrorException(error);
     }
   }
