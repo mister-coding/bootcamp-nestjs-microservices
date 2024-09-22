@@ -29,6 +29,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useLogger(app.get(CustomLoggerService));
   app.useGlobalPipes(new ValidationPipe())
+  app.setGlobalPrefix('user');
 
   await app.listen(3000);
 }
