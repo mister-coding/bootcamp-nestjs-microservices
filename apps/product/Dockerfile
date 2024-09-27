@@ -1,4 +1,6 @@
-FROM node:18-alpine AS base
+FROM node:21-slim AS base
+
+RUN apt-get update -y && apt-get install -y openssl
 
 FROM base AS builder
 

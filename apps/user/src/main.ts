@@ -24,7 +24,7 @@ async function bootstrap() {
     )
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('user/swagger', app, document);
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useLogger(app.get(CustomLoggerService));

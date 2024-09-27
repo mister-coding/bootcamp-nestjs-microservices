@@ -23,11 +23,12 @@ async function bootstrap() {
   )
   .build();
 const document = SwaggerModule.createDocument(app, config);
-SwaggerModule.setup('swagger', app, document);
+SwaggerModule.setup('product/swagger', app, document);
 
 app.useGlobalFilters(new HttpExceptionFilter());
 app.useLogger(app.get(CustomLoggerService));
 app.useGlobalPipes(new ValidationPipe())
+app.setGlobalPrefix('product');
   await app.listen(3000);
 }
 bootstrap();
