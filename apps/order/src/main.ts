@@ -8,26 +8,27 @@ import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-log
 async function bootstrap() {
   const app = await NestFactory.create(OrderModule);
   const config = new DocumentBuilder()
-  .setTitle('Order Services')
-  .setDescription('Orders')
-  .setVersion('1.0')
-  .addTag('orderservices')
-  .addServer("/order")
-  .addBearerAuth(
-    {
-      type: 'http',
-      scheme: 'bearer',
-      bearerFormat: 'JWT',
-    },
-    'accessToken',
-  )
-  .build();
-const document = SwaggerModule.createDocument(app, config);
-SwaggerModule.setup('swagger', app, document);
+    .setTitle('Order Services')
+    .setDescription('Orders')
+    .setVersion('1.0')
+    .addTag('orderservices')
+    .addServer('/order')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'accessToken',
+    )
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/order/swagger', app, document);
 
-app.useGlobalFilters(new HttpExceptionFilter());
-app.useLogger(app.get(CustomLoggerService));
-app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useLogger(app.get(CustomLoggerService));
+  app.useGlobalPipes(new ValidationPipe());
+  app.setGlobalPrefix('order');
   await app.listen(3000);
 }
 bootstrap();
