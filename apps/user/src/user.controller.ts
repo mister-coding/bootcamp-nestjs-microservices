@@ -25,7 +25,7 @@ export class UserController {
   }
 
   @GrpcMethod('UserService', 'FindByEmail')
-  async indByEmail(data: any, metadata: Metadata, call: ServerUnaryCall<any, any>) {
+  async findByEmail(data: any, metadata: Metadata, call: ServerUnaryCall<any, any>) {
     const user = await this.userRepo.getUserByEmail(data.email);
     return user;
   }

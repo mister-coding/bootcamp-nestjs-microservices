@@ -3,7 +3,7 @@ import { RepositoriesService } from '@app/repositories';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { User, UserService } from 'grpc/user.service';
+import { UserService } from 'grpc/user.service';
 import { firstValueFrom } from 'rxjs';
 import {
   NOTIFICATION_AUTH,
@@ -38,6 +38,8 @@ export class MailNotificationService implements OnModuleInit{
     const userData = await firstValueFrom(user);
 
 
+    
+
     new CustomLoggerService(MailNotificationService.name).log(
       'Send email forgot password',
       data.email,
@@ -53,7 +55,7 @@ export class MailNotificationService implements OnModuleInit{
       .then(() => {
         new CustomLoggerService().debug(
           'Success send email forgot password :',
-          data.email,
+          userData.email,
         );
       })
       .catch((err) => {
