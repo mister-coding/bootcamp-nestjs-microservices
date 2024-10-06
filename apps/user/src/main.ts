@@ -43,6 +43,8 @@ async function bootstrap() {
     }
   })
 
+  app.startAllMicroservices();
+
   await app.listen(3000);
 }
 bootstrap();

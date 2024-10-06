@@ -14,6 +14,7 @@ import { cwd } from 'process';
         options: {
           package: 'user',
           protoPath: join(cwd(), './proto/user/user.proto'),
+          url:"user:50053"
         },
       },
     ]),

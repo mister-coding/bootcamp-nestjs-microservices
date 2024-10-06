@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export enum UserLevel {
     ADMIN = 0,
     MEMBER = 1,
@@ -23,5 +25,5 @@ export interface User {
 }
 
 export interface UserService {
-    FindByEmail(request: UserEmail): Promise<User>;
+    FindByEmail(request: UserEmail): Observable<User>;
 }

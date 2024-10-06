@@ -3,7 +3,8 @@ import { RepositoriesService } from '@app/repositories';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { UserService } from 'grpc/user.service';
+import { User, UserService } from 'grpc/user.service';
+import { firstValueFrom } from 'rxjs';
 import {
   NOTIFICATION_AUTH,
   NOTIFICATION_AUTH_DATA,
@@ -32,10 +33,10 @@ export class MailNotificationService implements OnModuleInit{
   //send mail forgot password
   async sendMailForgotPassword(data: NOTIFICATION_AUTH_DATA) {
 
-    const user = await this.userServices.FindByEmail({email:data.email});
+    const user = this.userServices.FindByEmail({email:data.email});
 
-    console.log("user :",user);
-    
+    const userData = await firstValueFrom(user);
+
 
     new CustomLoggerService(MailNotificationService.name).log(
       'Send email forgot password',
@@ -44,7 +45,7 @@ export class MailNotificationService implements OnModuleInit{
 
     this.mailerService
       .sendMail({
-        to: data.email, // list of receivers
+        to: userData.email, // list of receivers
         subject: 'Link reset password', // Subject line
         template: 'auth/link-reset-password',
         context: data,

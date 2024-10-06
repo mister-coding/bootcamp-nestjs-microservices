@@ -5,6 +5,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
 import { UserRepository } from '@app/repositories/repos/user.repository';
+import { Observable, of } from 'rxjs';
+import { User } from 'grpc/user.service';
 
 @ApiTags('Users')
 @Controller()
@@ -23,13 +25,9 @@ export class UserController {
   }
 
   @GrpcMethod('UserService', 'FindByEmail')
-  FindByEmail(data: any, metadata: Metadata, call: ServerUnaryCall<any, any>): any {
-    const items = [
-      { id: 1, name: 'John', email:"john@gmail.coms" }
-    ];
-    console.log(items);
-    
-    return items.find(({ email }) => email === data.email);
+  async indByEmail(data: any, metadata: Metadata, call: ServerUnaryCall<any, any>) {
+    const user = await this.userRepo.getUserByEmail(data.email);
+    return user;
   }
   
 }
