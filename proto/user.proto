@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package user;
+
+service UserService{
+    rpc FindByEmail(UserEmail) returns (User) {}
+}
+
+message UserEmail{
+    string email = 1;
+}
+
+enum UserLevel {
+    ADMIN = 0;
+    MEMBER = 1;
+}
+
+
+message User {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string password = 4;
+    string phone = 5;
+    string avatar = 6;
+    string avatar_media_id = 7;
+    UserLevel user_level = 8;
+    string created_at = 9;
+    string updated_at = 10;
+}
