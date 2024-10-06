@@ -39,7 +39,7 @@ async function bootstrap() {
     options:{
       url: "0.0.0.0:50053",
       package: "user",
-      protoPath:[join(cwd(),'./proto/user.proto')]
+      protoPath:[join(cwd(),'./proto/user/user.proto')]
     }
   })
 

@@ -77,15 +77,16 @@ services:
     # command: bash -c "yarn &&  yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev media"
 
   notification:
-    image: mistercodingdev/ecommerce-api-notification-service:v1.0.0
-    # working_dir: /app
+    # image: mistercodingdev/ecommerce-api-notification-service:v1.0.0
+    image: node:18
+    working_dir: /app
     env_file:
       - .env
     depends_on:
       - nats
-    # volumes:
-    #   - ./:/app
-    # command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev notification"
+    volumes:
+      - ./:/app
+    command: bash -c "yarn && yarn prisma generate && yarn prisma generate --schema ./prisma/schema_mongo.prisma && yarn start:dev notification"
 
   db:
     image: postgres:15.3

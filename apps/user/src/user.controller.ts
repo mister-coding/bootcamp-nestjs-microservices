@@ -4,6 +4,7 @@ import { CommonService } from '@app/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Metadata, ServerUnaryCall } from '@grpc/grpc-js';
+import { UserRepository } from '@app/repositories/repos/user.repository';
 
 @ApiTags('Users')
 @Controller()
@@ -11,6 +12,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private common: CommonService,
+    private userRepo: UserRepository
   ) {}
 
   @Get()
@@ -25,6 +27,8 @@ export class UserController {
     const items = [
       { id: 1, name: 'John', email:"john@gmail.coms" }
     ];
+    console.log(items);
+    
     return items.find(({ email }) => email === data.email);
   }
   

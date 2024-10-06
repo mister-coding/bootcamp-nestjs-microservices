@@ -1,7 +1,9 @@
 import { CustomLoggerService } from '@app/common/logger/custom-logger/custom-logger.service';
 import { RepositoriesService } from '@app/repositories';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { ClientGrpc } from '@nestjs/microservices';
+import { UserService } from 'grpc/user.service';
 import {
   NOTIFICATION_AUTH,
   NOTIFICATION_AUTH_DATA,
@@ -12,14 +14,34 @@ import {
 } from 'types/notification';
 
 @Injectable()
-export class MailNotificationService {
+export class MailNotificationService implements OnModuleInit{
+
+  private userServices: UserService
+
   constructor(
     private readonly mailerService: MailerService,
     private repos: RepositoriesService,
+    @Inject('USER_PACKAGE') private client: ClientGrpc
   ) {}
 
+  onModuleInit() {
+    this.userServices = this.client.getService<UserService>('UserService');
+  }
+
+
   //send mail forgot password
-  sendMailForgotPassword(data: NOTIFICATION_AUTH_DATA) {
+  async sendMailForgotPassword(data: NOTIFICATION_AUTH_DATA) {
+
+    const user = await this.userServices.FindByEmail({email:data.email});
+
+    console.log("user :",user);
+    
+
+    new CustomLoggerService(MailNotificationService.name).log(
+      'Send email forgot password',
+      data.email,
+    );
+
     this.mailerService
       .sendMail({
         to: data.email, // list of receivers
